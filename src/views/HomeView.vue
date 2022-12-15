@@ -24,12 +24,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <p>{{language}}</p>
-    <p>{{version}}</p>
-    <p>{{isInClient}}</p>
-    <p>{{isLoggedIn}}</p>
-    <p>{{os}}</p>
-    <p>{{lineVersion}}</p>
-
+   
   </div>
 </template>
