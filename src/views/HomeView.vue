@@ -15,6 +15,7 @@ onMounted(async () => {
       const isLoggedIn = liff.isLoggedIn(); // Boolean。使用者是否登入 LINE 帳號。true 時，可呼叫需要 Access Token 的 API
       const os = liff.getOS(); // String。回傳使用者作業系統：ios、android、web
       const lineVersion = liff.getLineVersion(); // 使用者的 LINE 版本
+      console.log(language,version,isInClient,isLoggedIn,os,lineVersion);
     })
     .catch((err) => {
       console.log(err.code, err.message);
