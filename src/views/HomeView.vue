@@ -33,14 +33,14 @@ onMounted(async () => {
 })
 
 const login = () => {
-  if(!isLoggedIn) {
+  if(!data.isLoggedIn) {
     liff.login({
       redirectUri: window.location.href
     });
   }
 }
 const logout = () => {
-  if(isLoggedIn) {
+  if(data.isLoggedIn) {
     liff.logout();
     window.location.reload(); // 登出後重整一次頁面
   }
