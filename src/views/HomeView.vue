@@ -76,6 +76,38 @@ const getUserInfo = () => {
     console.log(userdata.user);
   }
 }
+
+const sendMessegeToSelf = () => {
+  // 傳送訊息給自己
+  // type 的可用值說明：https://developers.line.biz/en/reference/liff/#send-messages
+  liff.sendMessages([
+    {
+      type: 'text',
+      text: "嗨，測試訊息"
+    }
+  ]).then(function(res) {
+      console.log(res)
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}
+
+const sendMessegeToOther = () => {
+  // 傳送訊息給朋友
+  // 發訊息的可用參數：https://developers.line.biz/en/reference/liff/#share-target-picker
+  if(isLoggedIn && liff.isApiAvailable('shareTargetPicker')) {
+    liff.shareTargetPicker([
+      {
+        type: "text",
+        text: "嗨，測試訊息"
+      }
+    ])
+    .then(res => window.alert(res.status))
+    .catch(error => window.alert(error))
+  }
+}
+
 </script>
 
 <template>
@@ -101,6 +133,10 @@ const getUserInfo = () => {
       <p>使用者公開資料:{{userdata.profile}}</p>
       <p>{{userdata.user}}</p>
       <button @click="getUserInfo()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">取得使用者資料</button>  
+    </div>
+    <div>
+      <button @click="sendMessegeToSelf()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">發送訊息給自己</button>  
+      <button @click="sendMessegeToOther()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">發送訊息給別人</button>  
     </div>
   </div>
  
