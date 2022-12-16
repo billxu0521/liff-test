@@ -11,6 +11,12 @@ const sysdata = reactive({
   lineVersion : "",
 }); 
 
+const userdata = reactive({
+  context : "",
+  profile : "",
+  user : "",
+}); 
+
 
 onMounted(async () => {
   liff
@@ -39,10 +45,35 @@ const login = () => {
     });
   }
 }
+
 const logout = () => {
   if(sysdata.isLoggedIn) {
     liff.logout();
     window.location.reload(); // 登出後重整一次頁面
+  }
+}
+
+const getUserInfo = () => {
+  if(sysdata.isLoggedIn) {
+    // 取得使用者類型資料
+    userdata.context = liff.getContext();
+    console.log(userdata.context);
+
+    // 取得使用者公開資料
+    // 後台的「Scopes」要設定開啟 profile, openid
+    liff.getProfile()
+        .then(function(profile) {
+          userdata.profile = profile;
+          console.log(userdata.profile);
+        });
+
+    // 取得使用者 email
+    // 後台的 Email address permission 要是「Applied」
+    // LIFF 的設定，Scopes 的「email*」要打勾
+    // 使用者在登入時，「電子郵件帳號」也要是「許可」的
+    const user = liff.getDecodedIDToken();
+    userdata.user = user
+    console.log(userdata.user);
   }
 }
 </script>
@@ -58,9 +89,18 @@ const logout = () => {
       <p>平台：{{sysdata.os}}</p>
       </div>
     <div>
-      <button @click="login()">登入</button>
+      這邊測試登入登出
       <br>
-      <button @click="logout()">登出</button>  
+      <button @click="login()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">登入</button>
+      <br>
+      <button @click="logout()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">登出</button>  
+    </div>
+    <div>
+      取得使用者資料
+      <p>使用者類型：{{userdata.context}}</p>
+      <p>使用者公開資料:{{userdata.profile}}</p>
+      <p>{{userdata.user}}</p>
+      <button @click="getUserInfo()" class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">取得使用者資料</button>  
     </div>
   </div>
  
