@@ -58,9 +58,9 @@ const logout = () => {
       <p>平台：{{sysdata.os}}</p>
       </div>
     <div>
-      <button @click="login">登入</button>
+      <button @click="login()">登入</button>
       <br>
-      <button @click="logout">登出</button>  
+      <button @click="logout()">登出</button>  
     </div>
   </div>
  
