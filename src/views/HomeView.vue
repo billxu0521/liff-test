@@ -93,7 +93,7 @@ const sendMessegeToSelf = () => {
 const sendMessegeToOther = () => {
   // 傳送訊息給朋友
   // 發訊息的可用參數：https://developers.line.biz/en/reference/liff/#share-target-picker
-  if(isLoggedIn && liff.isApiAvailable('shareTargetPicker')) {
+  if(sysdata.isLoggedIn && liff.isApiAvailable('shareTargetPicker')) {
     liff.shareTargetPicker([
       {
         type: "text",
@@ -106,7 +106,7 @@ const sendMessegeToOther = () => {
 }
 
 const openScanCode = () => {
-  if(isLoggedIn && liff.scanCode) {
+  if(sysdata.isLoggedIn && liff.scanCode) {
     liff.scanCode()
       .then(res => window.alert(res.status))
       .catch(error => window.alert(error))
@@ -115,7 +115,7 @@ const openScanCode = () => {
 }
 const closeAPP = () => {
   // 先確認是否在 LINE App 內
-  if(isInClient) {
+  if(sysdata.isInClient) {
     liff.closeWindow();
   }
 }
